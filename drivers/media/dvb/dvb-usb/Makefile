@@ -82,6 +82,25 @@ obj-$(CONFIG_DVB_USB_CE6230) += dvb-usb-ce6230.o
 dvb-usb-friio-objs = friio.o friio-fe.o
 obj-$(CONFIG_DVB_USB_FRIIO) += dvb-usb-friio.o
 
+dvb-usb-mtvhd-objs = mtvhd.o mtvhd-stream.o
+ifeq ($(CONFIG_DVB_USB_MTVHD_V1),y)
+  dvb-usb-mtvhd-objs += mtvhd-v1.o
+endif
+ifeq ($(CONFIG_DVB_USB_MTVHD_V2),y)
+  dvb-usb-mtvhd-objs += mtvhd-v2.o
+endif
+ifeq ($(CONFIG_DVB_USB_MTVHD_DES_KERNEL),y)
+dvb-usb-mtvhd-objs += mtvhd-des-kernel.o
+else
+dvb-usb-mtvhd-objs += mtvhd-des-gnulib.o des.o
+endif
+ifeq ($(CONFIG_DVB_USB_MTVHD_V1),y)
+  dvb-usb-mtvhd-objs += mtvhd-xor.o
+endif
+obj-$(CONFIG_DVB_USB_MTVHD) += dvb-usb-mtvhd.o
+dvb-usb-asv5211-objs = asv5211.o
+obj-$(CONFIG_DVB_USB_MTVHD) += dvb-usb-asv5211.o
+
 dvb-usb-ec168-objs = ec168.o
 obj-$(CONFIG_DVB_USB_EC168) += dvb-usb-ec168.o
 

@@ -329,6 +329,83 @@ config DVB_USB_FRIIO
 	help
 	  Say Y here to support the Japanese DTV receiver Friio.
 
+config DVB_USB_MTVHD
+	tristate "SKNET MonsterTV HD ISDB-T support"
+	depends on DVB_USB
+	help
+	  Say Y here to support the SKNET MonsterTV HD ISDB-T receiver
+
+if DVB_USB_MTVHD
+
+config DVB_USB_MTVHD_V1
+	bool "Version 1 of SKNET MonsterTV HD series support"
+	depends on DVB_USB_MTVHD
+	help
+	  Say Y here to support Version 1 of SKNET MonsterTV HD series:
+
+	    MonsterTV HDUS
+	    MonsterTV HDP
+
+config DVB_USB_MTVHD_V2
+	bool "Version 2 of SKNET MonsterTV HD series support"
+	depends on DVB_USB_MTVHD
+	default y
+	help
+	  Say Y here to support Version 2 of SKNET MonsterTV HD series:
+
+	    SKNET MonsterTV HDUC
+	    SKNET MonsterTV HDP2
+	    SKNET MonsterTV HDU2
+	    LOGITEC LDT-FS100U
+	    QUIXUN QRS-UT100B
+
+config DVB_USB_MTVHD_REMOTE_CONTROL
+	bool "IR remote controller for SKNET MonsterTV HD"
+	depends on DVB_USB_MTVHD
+	help
+	  Say Y here to support the IR remote controller on SKNET MonsterTV HD
+
+config DVB_USB_MTVHD_DES_KERNEL
+	bool "Use crypto_des library of Linux kernel"
+	depends on DVB_USB_MTVHD
+	depends on CRYPTO_DES
+	depends on BROKEN
+	default n
+	help
+	  This specifies the library to use for DES decryption.
+
+	  If you say Y here, use crypto_des library of Linux kernel.
+	  The module size is smaller, but it costs some overheads.
+
+	  If you say N here, use gnulib des library built in this module.
+
+endif # DVB_USB_MTVHD
+
+config DVB_USB_ASV5211
+	tristate "Firmware downloader for ASICEN ASV5211"
+	depends on DVB_USB
+	help
+	  Say Y here to download firmware for the ASICEN ASV5211 chip.
+	  The ASV5211 is used on:
+
+	    SKNET MonsterTV HD series
+
+if DVB_USB_ASV5211
+
+config DVB_USB_ASV5211_WIN_DRIVER
+	bool "Use Windows driver file for ASV5211 firmware"
+	depends on DVB_USB_ASV5211
+	default n
+	help
+	  This specifies the format of the ASV5211 firmware file.
+
+	  If you say Y here, use Windows driver file for the firmware to download.
+	  This requires the specific version of "AS11Loader.sys" file.
+
+	  If you say N here, use original format for this driver.
+
+endif # DVB_USB_ASV5211
+
 config DVB_USB_EC168
 	tristate "E3C EC168 DVB-T USB2.0 support"
 	depends on DVB_USB && EXPERIMENTAL
